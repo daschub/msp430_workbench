@@ -21,7 +21,7 @@
 
 #include "headers/rtc.h"
 #include "headers/uart.h"
-#include "headers/functions.h"
+//#include "headers/functions.h"
 #include "headers/timer.h"
 
 
@@ -76,7 +76,7 @@ void validateTime(void);
 int validateLeapYear(void);
 void changeCalender(void);
 void timePassed(void);
-char *convertIntToString(uint32_t intValue, uint8_t *array);
+uint8_t *convertIntToString(uint32_t intValue, uint8_t *array);
 //void structToString(calender_t calender);
 void printString(uint8_t string);
 void validateStringFormat(uint8_t *transmittedString);
@@ -264,7 +264,7 @@ void validateCalender(void)
         8436 %    10  =    6  /    1  = 6
  *
  */
-char *convertIntToString(uint32_t intValue, uint8_t *array)
+uint8_t *convertIntToString(uint32_t intValue, uint8_t *array)
 {
     uint16_t i;
     uint32_t count = 1,  temp = intValue , temp2 = intValue;

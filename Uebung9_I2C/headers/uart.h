@@ -8,7 +8,7 @@
 #ifndef UART_UART_H_
 #define UART_UART_H_
 
-#define MAX_LENGHT_RECEIVE      22
+#define MAX_LENGHT_RECEIVE      50
 #define MAX_LENGHT_TRANSMIT     55
 
 /*****************************************
@@ -33,5 +33,6 @@ void uart_init(void);
 void uart_send(uint8_t*);
 void start_transmit(void);
 void start_receive(void);
+void stop_transmit(void);
 
 #endif /* UART_UART_H_ */

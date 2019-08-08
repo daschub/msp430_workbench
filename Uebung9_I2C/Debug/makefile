@@ -13,7 +13,9 @@ ORDERED_OBJS += \
 "./main.obj" \
 "./sources/catchUnwantedInterrupts.obj" \
 "./sources/clock.obj" \
+"./sources/concole.obj" \
 "./sources/functions.obj" \
+"./sources/handler.obj" \
 "./sources/i2c.obj" \
 "./sources/rtc.obj" \
 "./sources/timer.obj" \
@@ -31,8 +33,10 @@ RMDIR := RMDIR /S/Q
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
+-include headers/subdir_vars.mk
 -include sources/subdir_vars.mk
 -include subdir_rules.mk
+-include headers/subdir_rules.mk
 -include sources/subdir_rules.mk
 -include objects.mk
 
@@ -150,7 +154,7 @@ all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 Uebung9_I2C.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: MSP430 Linker'
-	"C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --advice:power="all" --define=__MSP430F5529__ -g --printf_support=full --diag_suppress=169 --diag_suppress=179 --diag_suppress=515 --diag_suppress=2580 --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 -z -m"Uebung9_I2C.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv8/ccs_base/msp430/include" -i"C:/ti/ccsv8/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/lib" -i"C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Uebung9_I2C_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "Uebung9_I2C.out" $(ORDERED_OBJS)
+	"C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --advice:power="all" --define=__MSP430F5529__ -g --printf_support=full --diag_suppress=169 --diag_suppress=2170 --diag_suppress=179 --diag_suppress=515 --diag_suppress=2580 --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 -z -m"Uebung9_I2C.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv8/ccs_base/msp430/include" -i"C:/ti/ccsv8/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/lib" -i"C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Uebung9_I2C_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "Uebung9_I2C.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
@@ -164,8 +168,8 @@ Uebung9_I2C.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" "sources\catchUnwantedInterrupts.obj" "sources\clock.obj" "sources\functions.obj" "sources\i2c.obj" "sources\rtc.obj" "sources\timer.obj" "sources\uart.obj" 
-	-$(RM) "main.d" "sources\catchUnwantedInterrupts.d" "sources\clock.d" "sources\functions.d" "sources\i2c.d" "sources\rtc.d" "sources\timer.d" "sources\uart.d" 
+	-$(RM) "main.obj" "sources\catchUnwantedInterrupts.obj" "sources\clock.obj" "sources\concole.obj" "sources\functions.obj" "sources\handler.obj" "sources\i2c.obj" "sources\rtc.obj" "sources\timer.obj" "sources\uart.obj" 
+	-$(RM) "main.d" "sources\catchUnwantedInterrupts.d" "sources\clock.d" "sources\concole.d" "sources\functions.d" "sources\handler.d" "sources\i2c.d" "sources\rtc.d" "sources\timer.d" "sources\uart.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

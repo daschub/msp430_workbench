@@ -40,10 +40,8 @@ uint16_t buffer;
  ***********************************************/
 void i2c_init(void);
 //void stop_receive_i2c(void);
-void i2c_master_send(uint16_t, uint8_t*, uint16_t);
+void i2c_master_send(uint16_t, uint8_t, uint16_t);
 void i2c_master_receive(uint16_t, uint8_t*, uint16_t);
-uint16_t LM75_temperature(uint8_t*);
-uint8_t GPIO_setPinMode(uint8_t, uint8_t);
 
 
 #endif /* I2C_I2C_H_ */

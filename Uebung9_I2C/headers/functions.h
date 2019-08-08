@@ -11,17 +11,13 @@
 /***********************************************
  * Variables
  ***********************************************/
-
+/*
 #define SET_RTC         "SET RTC\r\n"
 #define GET_RTC         "GET RTC\r\n"
-#define SET_LED         "SET LED\r\n"
-#define LEDS_OFF        "LEDS OFF\r\n"
-#define SET_TEMP_C      "SET TEMP_C\r\n"
-#define SET_TEMP_F      "SET TEMP_F\r\n"
-#define GET_TEMPERATURE "GET TEMP\r\n"
-
-
-
+*/
+#define HIGH                    1
+#define LOW                     0
+#define MAX_LENG                1
 
 /*
  * tauscht Werte zweier Zahlen
@@ -39,6 +35,9 @@
 void compareReceivedParameter(void);
 void compareTransmittedParameter(void);
 uint16_t sizeof_t(uint8_t*);
+uint8_t addLeds(uint8_t*);
+uint8_t GPIO_setPinMode(uint8_t, uint8_t);
+uint16_t LM75_temperature(uint8_t*);
 
 
 #endif /* FUNCTIONS_FUNCTIONS_H_ */

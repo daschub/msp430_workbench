@@ -17,10 +17,7 @@
 #include <strings.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include "headers/functions.h"
-#include "headers/i2c.h"
-#include "headers/rtc.h"
 #include "headers/uart.h"
 
 
@@ -28,14 +25,6 @@
  * Variables
  ***********************************************/
 
-const uint8_t lenArrayLM75 = 2;
-const uint8_t lenArrayPCF8574T = 2;
-const uint8_t lenArrayLeds = 10;
-const uint8_t lenght = 1;
-
-uint8_t PCF8574T_LEDS[lenArrayLeds];
-uint8_t readBytes[lenArrayLM75];
-uint8_t writeBytes[lenArrayPCF8574T];
 
 uint16_t command_setTempCelsius = 1;
 uint16_t command_setTempFahrenheit = 0;
@@ -48,10 +37,7 @@ const uint8_t LED5 = BIT1;
 const uint8_t LED6 = BIT7;
 const uint8_t LED7 = BIT2;
 const uint8_t LED8 = BIT3;
-const uint8_t LEDS = (LED1|LED2|LED3|LED4|LED5|LED6|LED7|LED8);
-
-
-
+const uint8_t LED_ALL = (LED1|LED2|LED3|LED4|LED5|LED6|LED7|LED8);
 
 /***********************************************
  * Prototypes
@@ -64,34 +50,106 @@ const uint8_t LEDS = (LED1|LED2|LED3|LED4|LED5|LED6|LED7|LED8);
  ***********************************************/
 
 
+
 /*
- * setzt GPIO Pin als Input oder Output
- *
- *TODO
-void GPIO_setPin(uint8_t mode, uint16_t port, uint16_t pin)
-{
-    if(strcasecmp(Input, mode) == 0){                           // ist Eingabe Input ?
-
-
-
-    } else if(strcasecmp(Output, mode) == 0){                   // ist Eingabe Output ?
-
-    }
-
-
-}
-*/
-
-
+ * gibt länge des des übergebenden arrays @para zurück
+ */
 uint16_t sizeof_t(uint8_t* array)
 {
     return sizeof(array)/sizeof(*array);
 }
 
 
+
 /*
- * vergleicht HTERM eingabe vom benutzer und behandelt dementsprechend den String
+ * setzt Ledzustand
+ * @pins die zu setztenden LEDs
+ * @mode gibt an ob HIGH oder LOW
  */
+uint8_t GPIO_setPinMode(uint8_t pins, uint8_t mode)
+{
+    uint8_t temp_pins = 0xFF;
+    if(mode == HIGH){
+        temp_pins &= ~pins;
+    } else if (mode == LOW) {
+        temp_pins |= pins;
+    }
+    return temp_pins;
+}
+
+
+
+/*
+ * addiere Leds, für funktion gpio_setpinmode
+ */
+uint8_t addLeds(uint8_t *ptr)
+{
+    uint8_t leds = 0;
+
+    while(*ptr){                                           // addiere leds so oft bis keine zahl mehr kommt
+        switch(*ptr){
+            case '1':
+                leds |= LED1;
+                break;
+            case '2':
+                leds |= LED2;
+                break;
+            case '3':
+                leds |= LED3;
+                break;
+            case '4':
+                leds |= LED4;
+                break;
+            case '5':
+                leds |= LED5;
+                break;
+            case '6':
+                leds |= LED6;
+                break;
+            case '7':
+                leds |= LED7;
+                break;
+            case '8':
+                leds |= LED8;
+                break;
+            default:                                    // alle leds
+                leds = 0xFF;
+        }
+        ptr += 20;                                      // TODO
+    } // while;
+    return leds;
+}
+
+
+
+/*
+ *  liefert die Temperatur über den LM75 (1bit = 0,5°)
+ *  die gelesen zwei bytes werden durch richtiges shiften (s. Datasheet) in den Temperaturwert gewandelt
+ *  und mit 5 multipliziert um die dezimalStelle nach dem Komma in Integer auszugeben (@temperatureHandler)
+ */
+uint16_t LM75_temperature(uint8_t *readBytes)
+{
+    uint16_t temperature = 0;
+
+    temperature = (uint16_t)readBytes[0] >> 7;                  // lese Buffer
+
+    temperature |= (uint16_t)readBytes[1] << 1;                 // lese Buffer
+
+    temperature &= 0x01FF;
+    return temperature*5;                                       // Temperaturwert, letzte stelle ist dezimalstelle
+}
+
+
+
+#endif /* FUNCTIONS_FUNCTIONS_C_ */
+
+/*
+ * alte funktionen
+ */
+
+/*
+ * vergleicht konsoleneingabe vom benutzer und übergibt den parameter der func compareTransmittedParameter
+ *
 void compareReceivedParameter(void)                                                                     //TODO
 {
     command_konsolenEingabe = 1;
@@ -99,21 +157,7 @@ void compareReceivedParameter(void)                                             
     if (strcasecmp(GET_RTC, receivedString) == 0){                  // ist Eingabe GET_RTC ?
         calender = getCalender();                                   //
     } else if (strcasecmp(SET_RTC, receivedString) == 0){           // ist Eingabe SET_RTC ?
-        command_transmitConfig = 1;
-    } else if (strcasecmp(SET_LED, receivedString) == 0){           // ist Eingabe SET_LED ?
-        command_setLed = 1;
-    } else if (strcasecmp(LEDS_OFF, receivedString) == 0){           // ist Eingabe SET_LED ?
-        command_LedsOff = 1;
-    } else if (strcasecmp(SET_LED, receivedString) == 0){           // ist Eingabe SET_LED ?
-        command_setLed = 1;                                     //
-    } else if (strcasecmp(SET_TEMP_C, receivedString) == 0){        // ist Eingabe SET_TEMP_C ?
-        command_setTempCelsius = 1;                                 //
-        command_setTempFahrenheit = 0;                              //
-    } else if (strcasecmp(SET_TEMP_F, receivedString) == 0){        // ist Eingabe SET_TEMP_F ?
-        command_setTempFahrenheit = 1;                              //
-        command_setTempCelsius = 0;                                 //
-    } else if (strcasecmp(GET_TEMPERATURE, receivedString) == 0){   // ist Eingabe GET_TEMPERATURE ?
-        command_readTemperature = 1;                                //
+        command_transmitConfig = 1;                               //
     } else if (command_checkString){                                // ist die Eingabe ein neues Datum?
         validateCalender();                                         // prüfe auf sinnvolle Datumseingabe
         command_transmitConfig = 1;
@@ -131,12 +175,12 @@ void compareReceivedParameter(void)                                             
     } // if
 } // compareReceivedParameter
 
-
+*/
 
 
 /*
  * entscheidet welche Hterm ausgabe -> korrekt eingabe vom benutzer oder unbekannt
- */
+ *
 void compareTransmittedParameter(void)
 {
 
@@ -158,53 +202,5 @@ void compareTransmittedParameter(void)
 
         } // else if command_transmitConfig
 
-        else if (command_setLed){                                       // soll geändertes Datum gelesen werden
-            command_setLed = 0;
 
-            //strcpy(transmittedString, "Welche LED's sollen angeschaltet werden? \r\n");
-            PCF8574T_LEDS[0] = GPIO_setPinMode(LED3, HIGH);
-            PCF8574T_LEDS[1] = GPIO_setPinMode(LED4, HIGH);
-
-            i2c_master_send(SLAVE_PCF8574T, PCF8574T_LEDS, sizeof_t(PCF8574T_LEDS)-1);
-            __delay_cycles(2000000);
-
-        } // else if command_setLed
-
-        else if (command_LedsOff){                                       // soll geändertes Datum gelesen werden
-            command_LedsOff = 0;
-
-            //strcpy(transmittedString, "Welche LED's sollen angeschaltet werden? \r\n");
-            PCF8574T_LEDS[0] = GPIO_setPinMode(LEDS, LOW);
-            i2c_master_send(SLAVE_PCF8574T, PCF8574T_LEDS, lenght);
-            __delay_cycles(2000000);
-
-        } // else if command_setLed
-
-        else if(command_readTemperature){                                       // soll Kalender gelesen werden ?
-            command_readTemperature = 0;
-
-            i2c_master_receive(SLAVE_LM75, readBytes, lenArrayLM75);              // lese LM75, schreibe 2Bytes in array
-            uint16_t temp = LM75_temperature(readBytes);            // wandle in rawTemperatur um
-
-            if(command_setTempCelsius){
-               sprintf(transmittedString, "%02d,%d °C \r\n",temp/10, temp%10);                              // Temperatur als String
-            } else if (command_setTempFahrenheit){
-               temp = (temp * 9/5) + 32;                                                                    // in Fahrenheit, z.B. (26 °C × 9/5) + 32 = 79,7 °F
-               sprintf(transmittedString, "%02d,%d °F \r\n",temp/10, temp%10);                              // Temperatur als String
-            }
-
-        } // else if command_readTemperature
-
-    } else {                                                                                                    // fall: falsche Konsoleneingabe
-        uart_send("Eingabe: Unbekannt\r\n");
-    } // if command_Konsoleneingabe
-
-} // compareTransmittedParameter
-
-
-
-
-
-
-
-#endif /* FUNCTIONS_FUNCTIONS_C_ */
+*/

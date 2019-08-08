@@ -30,7 +30,6 @@ uint16_t indexTransmitString = 0;                        // Indexzahl für Ausgab
 /*************************************
  * Prototypes
  ************************************/
-void stop_transmit(void);
 void stop_receive(void);
 
 
@@ -85,7 +84,7 @@ void start_transmit(void)
  */
 void start_receive(void)
 {
-    UCA1IE |= 0x01;                                             // aktiviere Transmit interrupt
+    UCA1IE |= 0x01;                                             // aktiviere Receive interrupt
 }
 
 
@@ -102,7 +101,7 @@ void stop_transmit(void)
  */
 void stop_receive(void)
 {
-    UCA1IE &= ~0x01;                                            // deaktiviere Transmit interrupt
+    UCA1IE &= ~0x01;                                            // deaktiviere Receive interrupt
 }
 
 
@@ -119,9 +118,9 @@ __interrupt void isr_uartA1(void)
         indexReceiveString++;
 
         if(UCA1RXBUF == '\n' || (indexReceiveString == MAX_LENGHT_RECEIVE)){      // ist Ende des Strings/Arrays erreicht?
-            receivedString[indexReceiveString] = '\0';                      // um Stringende zu erkennen
+            receivedString[indexReceiveString-2] = '\0';                    // um Stringende zu erkennen, und entfernt mit [index-2]  '\r\n'
             indexReceiveString = 0;
-            command_receivedString = 1;                                     // damit Umwandlung gestartret wird
+            command_receivedString = 1;                                     // damit Umwandlung gestartret wird       TODO ändern
             stop_receive();
         } // if
         UCA1IFG &= ~UCRXIFG;                                                // lösche Receive Flag

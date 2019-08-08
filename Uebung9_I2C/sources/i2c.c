@@ -22,7 +22,6 @@
 /***********************************************
  * Variables
  ************************************************/
-uint8_t temp_pins = 0;
 
 
 /***********************************************
@@ -63,20 +62,6 @@ void i2c_init(void)
 }
 
 
-/*
- * setzt Ledzustand
- * @pins die zu setztenden LEDs
- * @mode gibt an ob HIGH oder LOW
- */
-uint8_t GPIO_setPinMode(uint8_t pins, uint8_t mode)
-{
-    if(mode == HIGH){
-        temp_pins &= ~pins;
-    } else if (mode == LOW) {
-        temp_pins |= pins;
-    }
-    return temp_pins;
-}
 
 /*
  * aktiviere Transmit
@@ -104,7 +89,7 @@ void start_receive_i2c(void)
  * @slave übergibt Adresse des Slaves
  * @byte übergibt Zustand der Portpins
  */
-void i2c_master_send(uint16_t slave, uint8_t *writeByte, uint16_t length)
+void i2c_master_send(uint16_t slave, uint8_t writeByte, uint16_t length)
 {
 
     UCB1I2CSA = slave;                                          // setzte Slaveadresse
@@ -114,7 +99,7 @@ void i2c_master_send(uint16_t slave, uint8_t *writeByte, uint16_t length)
 
         while ((UCB1CTL1&UCTXSTT) && ((UCB1IFG&UCTXIFG) == 0));     // busy wait -> wartet bis ack nach slaveadresse kommt
 
-        UCB1TXBUF = *writeByte;                                           // schreibe in Buffer
+        UCB1TXBUF = writeByte;                                           // schreibe in Buffer
         __delay_cycles(1000);
 
         writeByte++;
@@ -156,35 +141,6 @@ void i2c_master_receive(uint16_t slave, uint8_t *readByte, uint16_t len)
     UCB1CTL1 |= 0x04;                                           // UCTXSTP = 1
 
 } // i2c_master_receive
-
-
-
-
-
-uint16_t LM75_temperature(uint8_t *readBytes)
-{
-    uint16_t temperature = 0;
-
-    temperature = (uint16_t)readBytes[0] >> 7;                  // lese Buffer
-
-    temperature |= (uint16_t)readBytes[1] << 1;                 // lese Buffer
-
-    temperature &= 0x01FF;
-    return temperature*5;                                       // temperaturwert, letzte stelle ist dezimalstelle
-}
-
-
-
-/*
- * prüft auf vorzeichen der temperatur
- *                                                          // TODO
-int readTemperature(uint16_t temperature)
-{
-    if (temperature&0x0100)
-        temperature = negative;
-    else positive;
-}
-*/
 
 
 

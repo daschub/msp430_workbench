@@ -22,6 +22,8 @@ main.obj: ../headers/timer.h
 main.obj: ../headers/i2c.h
 main.obj: ../headers/uart.h
 main.obj: ../headers/functions.h
+main.obj: ../headers/console.h
+main.obj: ../headers/handler.h
 
 ../main.c: 
 C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/stdint.h: 
@@ -45,3 +47,5 @@ C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/stdarg.h:
 ../headers/i2c.h: 
 ../headers/uart.h: 
 ../headers/functions.h: 
+../headers/console.h: 
+../headers/handler.h: 

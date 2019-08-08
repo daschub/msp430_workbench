@@ -22,7 +22,6 @@ sources/rtc.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/_de
 sources/rtc.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/machine/_limits.h
 sources/rtc.obj: Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/rtc.h
 sources/rtc.obj: Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/uart.h
-sources/rtc.obj: Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/functions.h
 sources/rtc.obj: Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/timer.h
 
 ../sources/rtc.c: 
@@ -47,5 +46,4 @@ C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/_defs.h:
 C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/machine/_limits.h: 
 Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/rtc.h: 
 Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/uart.h: 
-Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/functions.h: 
 Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/timer.h: 

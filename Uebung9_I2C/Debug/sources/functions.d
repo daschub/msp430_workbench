@@ -20,12 +20,7 @@ sources/functions.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/inclu
 sources/functions.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/stdio.h
 sources/functions.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/stdarg.h
 sources/functions.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/stdlib.h
-sources/functions.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/math.h
-sources/functions.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/_defs.h
-sources/functions.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/machine/_limits.h
 sources/functions.obj: Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/functions.h
-sources/functions.obj: Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/i2c.h
-sources/functions.obj: Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/rtc.h
 sources/functions.obj: Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/uart.h
 
 ../sources/functions.c: 
@@ -48,10 +43,5 @@ C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/linkage.h:
 C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/stdio.h: 
 C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/stdarg.h: 
 C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/stdlib.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/math.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/_defs.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/machine/_limits.h: 
 Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/functions.h: 
-Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/i2c.h: 
-Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/rtc.h: 
 Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/uart.h: 

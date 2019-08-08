@@ -8,7 +8,9 @@ SHELL = cmd.exe
 C_SRCS += \
 ../sources/catchUnwantedInterrupts.c \
 ../sources/clock.c \
+../sources/concole.c \
 ../sources/functions.c \
+../sources/handler.c \
 ../sources/i2c.c \
 ../sources/rtc.c \
 ../sources/timer.c \
@@ -17,7 +19,9 @@ C_SRCS += \
 C_DEPS += \
 ./sources/catchUnwantedInterrupts.d \
 ./sources/clock.d \
+./sources/concole.d \
 ./sources/functions.d \
+./sources/handler.d \
 ./sources/i2c.d \
 ./sources/rtc.d \
 ./sources/timer.d \
@@ -26,7 +30,9 @@ C_DEPS += \
 OBJS += \
 ./sources/catchUnwantedInterrupts.obj \
 ./sources/clock.obj \
+./sources/concole.obj \
 ./sources/functions.obj \
+./sources/handler.obj \
 ./sources/i2c.obj \
 ./sources/rtc.obj \
 ./sources/timer.obj \
@@ -35,7 +41,9 @@ OBJS += \
 OBJS__QUOTED += \
 "sources\catchUnwantedInterrupts.obj" \
 "sources\clock.obj" \
+"sources\concole.obj" \
 "sources\functions.obj" \
+"sources\handler.obj" \
 "sources\i2c.obj" \
 "sources\rtc.obj" \
 "sources\timer.obj" \
@@ -44,7 +52,9 @@ OBJS__QUOTED += \
 C_DEPS__QUOTED += \
 "sources\catchUnwantedInterrupts.d" \
 "sources\clock.d" \
+"sources\concole.d" \
 "sources\functions.d" \
+"sources\handler.d" \
 "sources\i2c.d" \
 "sources\rtc.d" \
 "sources\timer.d" \
@@ -53,7 +63,9 @@ C_DEPS__QUOTED += \
 C_SRCS__QUOTED += \
 "../sources/catchUnwantedInterrupts.c" \
 "../sources/clock.c" \
+"../sources/concole.c" \
 "../sources/functions.c" \
+"../sources/handler.c" \
 "../sources/i2c.c" \
 "../sources/rtc.c" \
 "../sources/timer.c" \
