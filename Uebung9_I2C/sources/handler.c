@@ -34,19 +34,16 @@
 /********************************************
  * Variables
  ********************************************/
-const uint8_t temp_pins = 0xFF;
-
 uint8_t PCF8574T_LEDS[LED_ARRAY];
 uint8_t readBytes[LM75_LENGHT];
+uint8_t readLeds[PCF8574T_LENGHT];
 uint8_t writeBytes[PCF8574T_LENGHT];
-uint8_t leds = 0;
-
+uint8_t pinState = 0;
 eingabe_t eingabe;
 
 uint8_t *parameter1 = eingabe.parameter[0];
 uint8_t *parameter2 = eingabe.parameter[1];
 uint8_t *parameter3 = eingabe.parameter[2];
-
 
 
 /********************************************
@@ -72,9 +69,11 @@ void command_debug(void)
 void commandHandler(void)
 {
     uint8_t* commandArray = 0;
+    uint8_t leds = 0;
 
     if (strcasecmp("temperature", parameter1) == 0){
         commandArray = temperatureHandler();                // gibt temperatur + einheit zurück
+
         uart_send(commandArray);
     } else if (strcasecmp("adc", parameter1) == 0){
         adcHandler(parameter2);
@@ -83,10 +82,15 @@ void commandHandler(void)
     } else if (strcasecmp("led", parameter1) == 0){
         leds = ledHandler();                                // welche leds schalten?
         i2c_master_send(SLAVE_PCF8574T, leds, MAX_LENG);
-        uart_send("LEDs geschaltet\r\n");                   // sende welche leds geschaltet  TODO welche leds geschaltet
-    } /*else {
-        uart_ send("für diesen Paramter ist noch kein handler vorhanden");
-    }*/
+        if (command_temperature){
+            command_temperature = 0;
+        } else {
+            uart_send("LEDs geschaltet\r\n");               // sende welche leds geschaltet  TODO welche leds geschaltet
+        }
+    } else {
+        uart_send("für diesen Paramter ist noch kein handler vorhanden\r\n");
+    }
+
 
 } // commandHandler
 
@@ -104,11 +108,6 @@ uint8_t* temperatureHandler(void)
         i2c_master_receive(SLAVE_LM75, readBytes, LM75_LENGHT);                     // lese LM75, schreibe 2Bytes in array
         temp = LM75_temperature(readBytes);                                         // wandle in rawTemperatur um
 
-        /*
-    } else
-        uart_send("dieses commando ist für temperatur nicht zulässig")
-    }*/
-
         if (strcasecmp("celsius", parameter3) == 0){
             sprintf(stringTemperature, "%02d,%d °C \r\n", temp/10, temp%10);            // Temperatur als String
         } else if (strcasecmp("fahrenheit", parameter3) == 0){
@@ -120,6 +119,18 @@ uint8_t* temperatureHandler(void)
             sprintf(stringTemperature, "%02d,%d K \r\n", temp/100, temp%100);           // Temperatur als String
         } // if "einheiten"
     } // if "print"
+    else if (strcasecmp("track", parameter2) == 0){
+        if (strcasecmp("on", parameter3) == 0){
+            command_temperatureTrack = 1;
+            uart_send("Balken-Leds an\r\n");
+        } else if (strcasecmp("off", parameter3) == 0){
+            command_temperatureTrack = 0;
+            uart_send("Balken-Leds aus\r\n");
+        }
+    } // temperatureTrack
+    else {
+    uart_send("dieses commando ist für temperatur nicht zulässig\r\n");
+    }
 
     return stringTemperature;
 }
@@ -157,15 +168,19 @@ uint8_t ledHandler(void)
 {
     uint8_t mode = 0;                                                   // welcher pegel soll anstehen?
     uint8_t i = 0;                                                      // laufvariable array
+    uint8_t leds = 0;
 
     if (strcasecmp("on", parameter2) == 0){
         mode = HIGH;
     } else if (strcasecmp("off", parameter2) == 0){
         mode = LOW;
     }
+                                        // TODO i2c_master_read PCA7485 -> datasheet p.9 input mode
+    //i2c_master_receive(SLAVE_PCF8574T, readLeds, PCF8574T_LENGHT);
 
-    leds = addLeds(parameter3);                                         // welche leds ein/ausgeschaltet werden sollen
+    leds = addLeds(parameter3);       // 2. parameter  readleds              // welche leds ein/ausgeschaltet werden sollen
     leds = GPIO_setPinMode(leds, mode);
+
     for (i = 10; i >= 2; i--){                                          // lösche gesetzte leds, falls nächstete eingabe kürzer
         *parameter3 = '\0';
         parameter3 += MAX_LENGTH_STRING;

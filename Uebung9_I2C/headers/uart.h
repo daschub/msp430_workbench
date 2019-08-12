@@ -17,13 +17,10 @@
 
 uint8_t receivedString[MAX_LENGHT_RECEIVE];                 // Eingabe-String
 uint8_t transmittedString[MAX_LENGHT_TRANSMIT];             // Ausgabe-String
-uint16_t command_receivedString;                            // ist True sobald kompletter String erhalten wurde
-uint16_t command_transmitString;                            // ist True sobald kompletter String gesendet wurde
-uint16_t command_setLed;
-uint16_t command_LedsOff;
-uint16_t command_readTemperature;                           //
-
-
+uint8_t command_receivedString;                            // ist True sobald kompletter String erhalten wurde
+uint8_t command_transmitString;                            // ist True sobald kompletter String gesendet wurde
+uint8_t command_temperatureChange;
+uint8_t command_temperature;
 
 /*****************************************
  * Prototypes

@@ -16,6 +16,7 @@
 #include "headers/functions.h"
 #include "headers/console.h"
 #include "headers/handler.h"
+#include "headers/timer.h"
 
 /**
  * main.c
@@ -26,11 +27,14 @@ void main(void)
 	
 
 	xt2_init();
-	timer_init();
+	timer1_init();
 	i2c_init();
 	uart_init();
 
+	start_timer1();
+
     uint8_t validate = 1;
+
 	__enable_interrupt();
 
 
@@ -44,6 +48,7 @@ void main(void)
             start_receive();
 	    }
 
+
 	    if (command_transmitString){
 	        command_transmitString = 0;
             if (validate == 0){
@@ -52,6 +57,12 @@ void main(void)
             } else {
                 uart_send("FALSCHE eINGABE\r\n");
             }
+	    }
+
+
+	    if (command_temperatureState && command_temperatureTrack){           //
+	        command_temperatureState = 0;
+	        temperatureState();
 	    }
 
 	} // while

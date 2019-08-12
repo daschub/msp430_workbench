@@ -22,6 +22,9 @@ sources/functions.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/inclu
 sources/functions.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/stdlib.h
 sources/functions.obj: Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/functions.h
 sources/functions.obj: Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/uart.h
+sources/functions.obj: Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/i2c.h
+sources/functions.obj: Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/console.h
+sources/functions.obj: Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/handler.h
 
 ../sources/functions.c: 
 C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/stdint.h: 
@@ -45,3 +48,6 @@ C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/stdarg.h:
 C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.5.LTS/include/stdlib.h: 
 Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/functions.h: 
 Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/uart.h: 
+Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/i2c.h: 
+Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/console.h: 
+Q:/Praktikum/Praktikum\ -\ Mikrocontroller/Workspace/Uebung9_I2C/headers/handler.h: 

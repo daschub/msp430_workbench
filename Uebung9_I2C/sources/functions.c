@@ -19,30 +19,38 @@
 #include <stdlib.h>
 #include "headers/functions.h"
 #include "headers/uart.h"
-
+#include "headers/i2c.h"
+#include "headers/console.h"
+#include "headers/handler.h"
 
 /***********************************************
  * Variables
  ***********************************************/
-
-
-uint16_t command_setTempCelsius = 1;
-uint16_t command_setTempFahrenheit = 0;
-
-const uint8_t LED1 = BIT6;
-const uint8_t LED2 = BIT5;
-const uint8_t LED3 = BIT4;
-const uint8_t LED4 = BIT0;
-const uint8_t LED5 = BIT1;
-const uint8_t LED6 = BIT7;
-const uint8_t LED7 = BIT2;
-const uint8_t LED8 = BIT3;
+const uint8_t LED1 = (BIT6);
+const uint8_t LED2 = (BIT5);
+const uint8_t LED3 = (BIT4);
+const uint8_t LED4 = (BIT0);
+const uint8_t LED5 = (BIT1);
+const uint8_t LED6 = (BIT7);
+const uint8_t LED7 = (BIT2);
+const uint8_t LED8 = (BIT3);
 const uint8_t LED_ALL = (LED1|LED2|LED3|LED4|LED5|LED6|LED7|LED8);
+
+eingabe_t eingabe;
+
+uint16_t lastTemp = 0;
+uint8_t change = 0;
+uint8_t temp_pins =0;
+uint8_t readTemperature[2];
+temperature_t temperature1 = {
+                  27,
+                  "Celsius",
+                  3
+};
 
 /***********************************************
  * Prototypes
  ***********************************************/
-
 
 
 /***********************************************
@@ -68,11 +76,13 @@ uint16_t sizeof_t(uint8_t* array)
  */
 uint8_t GPIO_setPinMode(uint8_t pins, uint8_t mode)
 {
-    uint8_t temp_pins = 0xFF;
-    if(mode == HIGH){
-        temp_pins &= ~pins;
-    } else if (mode == LOW) {
+    if (command_temperatureTrack)
+        temp_pins = 0xFF;
+
+    if(mode == LOW){
         temp_pins |= pins;
+    } else if (mode == HIGH) {
+        temp_pins &= ~pins;
     }
     return temp_pins;
 }
@@ -82,42 +92,44 @@ uint8_t GPIO_setPinMode(uint8_t pins, uint8_t mode)
 /*
  * addiere Leds, für funktion gpio_setpinmode
  */
-uint8_t addLeds(uint8_t *ptr)
+uint8_t addLeds(uint8_t *ptr)   // TODO , uint8_t *readLeds zweiter parameter -> aktuelle leds
 {
-    uint8_t leds = 0;
+
+    uint8_t pinState = 0;
 
     while(*ptr){                                           // addiere leds so oft bis keine zahl mehr kommt
         switch(*ptr){
             case '1':
-                leds |= LED1;
+                pinState |= LED1;
                 break;
             case '2':
-                leds |= LED2;
+                pinState |= LED2;
                 break;
             case '3':
-                leds |= LED3;
+                pinState |= LED3;
                 break;
             case '4':
-                leds |= LED4;
+                pinState |= LED4;
                 break;
             case '5':
-                leds |= LED5;
+                pinState |= LED5;
                 break;
             case '6':
-                leds |= LED6;
+                pinState |= LED6;
                 break;
             case '7':
-                leds |= LED7;
+                pinState |= LED7;
                 break;
             case '8':
-                leds |= LED8;
+                pinState |= LED8;
                 break;
+            case 'a':
             default:                                    // alle leds
-                leds = 0xFF;
+                pinState = 0xFF;
         }
         ptr += 20;                                      // TODO
     } // while;
-    return leds;
+    return pinState;
 }
 
 
@@ -139,6 +151,73 @@ uint16_t LM75_temperature(uint8_t *readBytes)
     return temperature*5;                                       // Temperaturwert, letzte stelle ist dezimalstelle
 }
 
+
+
+/*
+ *
+ */
+uint8_t temperatureChange(uint16_t lastTemp){
+
+    uint8_t change = 0;
+
+    if (temperature1.value > lastTemp){
+        if (temperature1.ledState <= 1)
+            temperature1.ledState = 9;
+        temperature1.ledState -= 1;                                  // Led(i+1) on
+        change = 1;
+    } else if (temperature1.value < lastTemp){
+        if (temperature1.ledState >= 8)
+            temperature1.ledState = 0;
+        temperature1.ledState += 1;                                  // Led(i-1) on
+        change = 1;
+    } else {
+        change = 0;
+    }
+    temperature1.value = lastTemp;
+
+    return change;
+}
+
+
+
+/*
+ *   liefert aktuelle temperatur ohne Kommastelle
+ */
+uint16_t getTemperature(void){
+
+    uint16_t temp = 0;
+    i2c_master_receive(SLAVE_LM75, readTemperature, 2);                     // lese LM75, schreibe 2Bytes in array
+    temp = LM75_temperature(readTemperature);                               // wandle in rawTemperatur um
+    temp /= 10;
+
+    return temp;
+}
+
+
+
+/*
+ *
+ */
+void ledState(void)
+{
+    sprintf(receivedString, "led on %d", temperature1.ledState);
+    command_receivedString = 1;
+    command_temperature = 1;
+}
+
+
+
+/*
+ *
+ */
+void temperatureState(void)
+{
+    lastTemp = getTemperature();                                //
+    change = temperatureChange(lastTemp);                       //
+    if (change)
+        change = 0;
+        ledState();
+}
 
 
 #endif /* FUNCTIONS_FUNCTIONS_C_ */

@@ -87,7 +87,8 @@ void start_receive_i2c(void)
 /*
  * sende als Master
  * @slave übergibt Adresse des Slaves
- * @byte übergibt Zustand der Portpins
+ * @writeByte das Byte das geschrieben wird (z.B. Zustand der Portpins)
+ * @len Länge des Buffers
  */
 void i2c_master_send(uint16_t slave, uint8_t writeByte, uint16_t length)
 {
@@ -97,9 +98,9 @@ void i2c_master_send(uint16_t slave, uint8_t writeByte, uint16_t length)
 
     while (length){
 
-        while ((UCB1CTL1&UCTXSTT) && ((UCB1IFG&UCTXIFG) == 0));     // busy wait -> wartet bis ack nach slaveadresse kommt
+        while ((UCB1CTL1&UCTXSTT) && ((UCB1IFG&UCTXIFG) == 0));         // busy wait -> wartet bis ack nach slaveadresse kommt
 
-        UCB1TXBUF = writeByte;                                           // schreibe in Buffer
+        UCB1TXBUF = writeByte;                                          // schreibe in Buffer
         __delay_cycles(1000);
 
         writeByte++;
@@ -119,14 +120,18 @@ void i2c_master_send(uint16_t slave, uint8_t writeByte, uint16_t length)
 /*
  * lese als Master
  * @slave übergibt Adresse des Slaves
- * @return gibt die ausgelesene Temperatur zurück
- *
+ * @readbyte array in das der gelesene Wert geschrieben wird
+ * @len parameter der die Länge des Buffers angiebt
  *
  */
 void i2c_master_receive(uint16_t slave, uint8_t *readByte, uint16_t len)
 {
     UCB1I2CSA = slave;                                          // setzte Slaveadresse
     start_receive_i2c();                                        // UCTR = 1, UCTSTT = 1
+
+    if (len == 1){
+        UCB1CTL1 |= 0x04;                                       // UCTXSTP = 1
+    }
 
     while (len){
         while (UCB1CTL1&UCTXSTT);                               // busy wait -> wartet bis ack nach slaveadresse kommt
@@ -136,9 +141,11 @@ void i2c_master_receive(uint16_t slave, uint8_t *readByte, uint16_t len)
 
         readByte++;
         len--;
-    } // while len
 
-    UCB1CTL1 |= 0x04;                                           // UCTXSTP = 1
+        if (len == 1){
+            UCB1CTL1 |= 0x04;                                   // UCTXSTP = 1
+        }
+    } // while len
 
 } // i2c_master_receive
 

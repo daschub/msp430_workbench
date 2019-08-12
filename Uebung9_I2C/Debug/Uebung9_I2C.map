@@ -1,7 +1,7 @@
 ******************************************************************************
                   MSP430 Linker PC v18.1.5                     
 ******************************************************************************
->> Linked Thu Aug  8 18:26:28 2019
+>> Linked Mon Aug 12 15:59:39 2019
 
 OUTPUT FILE NAME:   <Uebung9_I2C.out>
 ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 000044d8
@@ -19,8 +19,8 @@ MEMORY CONFIGURATION
   INFOB                 00001900   00000080  00000000  00000080  RWIX
   INFOA                 00001980   00000080  00000000  00000080  RWIX
   USBRAM                00001c00   00000800  00000000  00000800  RWIX
-  RAM                   00002400   00002000  0000052b  00001ad5  RWIX
-  FLASH                 00004400   0000bb80  00000416  0000b76a  RWIX
+  RAM                   00002400   00002000  00000594  00001a6c  RWIX
+  FLASH                 00004400   0000bb80  000004cc  0000b6b4  RWIX
   INT00                 0000ff80   00000002  00000000  00000002  RWIX
   INT01                 0000ff82   00000002  00000000  00000002  RWIX
   INT02                 0000ff84   00000002  00000000  00000002  RWIX
@@ -85,7 +85,7 @@ MEMORY CONFIGURATION
   INT61                 0000fffa   00000002  00000002  00000000  RWIX
   INT62                 0000fffc   00000002  00000002  00000000  RWIX
   RESET                 0000fffe   00000002  00000002  00000000  RWIX
-  FLASH2                00010000   00014400  0000424a  000101b6  RWIX
+  FLASH2                00010000   00014400  000043b0  00010050  RWIX
 
 
 SECTION ALLOCATION MAP
@@ -93,60 +93,67 @@ SECTION ALLOCATION MAP
  output                                  attributes/
 section   page    origin      length       input sections
 --------  ----  ----------  ----------   ----------------
-.data      0    00002400    00000339     UNINITIALIZED
-                  00002400    00000320     concole.obj (.data:parameter)
-                  00002720    0000000e     handler.obj (.data)
-                  0000272e    00000004     rts430x_lc_rd_eabi.lib : strtok.c.obj (.data)
-                  00002732    00000004     uart.obj (.data)
-                  00002736    00000002     rts430x_lc_rd_eabi.lib : errno.c.obj (.data)
-                  00002738    00000001     concole.obj (.data)
+.data      0    00002400    0000039f     UNINITIALIZED
+                  00002400    00000370     concole.obj (.data:parameter)
+                  00002770    00000012     functions.obj (.data:temperature1)
+                  00002782    0000000e     handler.obj (.data)
+                  00002790    00000004     functions.obj (.data)
+                  00002794    00000004     rts430x_lc_rd_eabi.lib : strtok.c.obj (.data)
+                  00002798    00000004     uart.obj (.data)
+                  0000279c    00000002     rts430x_lc_rd_eabi.lib : errno.c.obj (.data)
+                  0000279e    00000001     concole.obj (.data)
 
-.bss       0    0000273a    00000152     UNINITIALIZED
-                  0000273a    000000c8     (.common:eingabe)
-                  00002802    00000038     (.common:transmittedString)
-                  0000283a    00000032     (.common:receivedString)
-                  0000286c    0000000c     (.common:calender)
-                  00002878    00000006     (.common:transmitData)
-                  0000287e    00000002     (.common:command_checkString)
-                  00002880    00000002     (.common:command_receivedString)
-                  00002882    00000002     (.common:command_slaveAddressSet)
-                  00002884    00000002     (.common:command_transmitString)
-                  00002886    00000002     (.common:countOverflows)
-                  00002888    00000002     (.common:indexTransmitData)
-                  0000288a    00000002     (.common:readBytes)
+.bss       0    000027a0    00000155     UNINITIALIZED
+                  000027a0    000000c8     (.common:eingabe)
+                  00002868    00000038     (.common:transmittedString)
+                  000028a0    00000032     (.common:receivedString)
+                  000028d2    0000000c     (.common:calender)
+                  000028de    00000006     (.common:transmitData)
+                  000028e4    00000002     (.common:command_checkString)
+                  000028e6    00000002     (.common:command_slaveAddressSet)
+                  000028e8    00000002     (.common:countOverflows)
+                  000028ea    00000002     (.common:indexTransmitData)
+                  000028ec    00000002     (.common:readBytes)
+                  000028ee    00000002     (.common:readTemperature)
+                  000028f0    00000001     (.common:command_receivedString)
+                  000028f1    00000001     (.common:command_temperature)
+                  000028f2    00000001     (.common:command_temperatureState)
+                  000028f3    00000001     (.common:command_temperatureTrack)
+                  000028f4    00000001     (.common:command_transmitString)
 
 .stack     0    00004360    000000a0     UNINITIALIZED
                   00004360    00000004     rts430x_lc_rd_eabi.lib : boot.c.obj (.stack)
                   00004364    0000009c     --HOLE--
 
 .text:_isr 
-*          0    00004400    00000114     
+*          0    00004400    00000118     
                   00004400    00000078     uart.obj (.text:_isr:isr_uartA1)
                   00004478    00000060     i2c.obj (.text:_isr:isr_i2c_B1)
                   000044d8    0000001c     rts430x_lc_rd_eabi.lib : boot.c.obj (.text:_isr:_c_int00_noargs)
-                  000044f4    00000010     timer.obj (.text:_isr:isr_delay)
-                  00004504    00000008     rts430x_lc_rd_eabi.lib : isr_trap.asm.obj (.text:_isr:__TI_ISR_TRAP)
-                  0000450c    00000008     rtc.obj (.text:_isr:isr_rtc)
+                  000044f4    00000014     timer.obj (.text:_isr:isr_delay)
+                  00004508    00000008     rts430x_lc_rd_eabi.lib : isr_trap.asm.obj (.text:_isr:__TI_ISR_TRAP)
+                  00004510    00000008     rtc.obj (.text:_isr:isr_rtc)
 
-.cinit     0    00004726    000000f0     
-                  00004726    000000ce     (.cinit..data.load) [load image, compression = lzss]
-                  000047f4    0000000c     (__TI_handler_table)
-                  00004800    00000006     (.cinit..bss.load) [load image, compression = zero_init]
-                  00004806    00000010     (__TI_cinit_table)
+.cinit     0    000047c8    00000104     
+                  000047c8    000000e2     (.cinit..data.load) [load image, compression = lzss]
+                  000048aa    0000000c     (__TI_handler_table)
+                  000048b6    00000006     (.cinit..bss.load) [load image, compression = zero_init]
+                  000048bc    00000010     (__TI_cinit_table)
 
 .binit     0    00004400    00000000     
 
 .init_array 
 *          0    00004400    00000000     UNINITIALIZED
 
-.const     0    00004514    00000212     
-                  00004514    00000101     rts430x_lc_rd_eabi.lib : ctype.c.obj (.const:.string:_ctypes_)
-                  00004615    00000001     --HOLE-- [fill = 0]
-                  00004616    000000d2     handler.obj (.const:.string)
-                  000046e8    00000026     rts430x_lc_rd_eabi.lib : _printfi.c.obj (.const:.string)
-                  0000470e    00000012     main.obj (.const:.string)
-                  00004720    00000004     rtc.obj (.const:.string:$P$T0$1)
-                  00004724    00000002     concole.obj (.const:.string:$P$T0$1)
+.const     0    00004518    000002b0     
+                  00004518    00000166     handler.obj (.const:.string)
+                  0000467e    00000101     rts430x_lc_rd_eabi.lib : ctype.c.obj (.const:.string:_ctypes_)
+                  0000477f    00000001     --HOLE-- [fill = 0]
+                  00004780    00000026                            : _printfi.c.obj (.const:.string)
+                  000047a6    00000012     main.obj (.const:.string)
+                  000047b8    0000000a     functions.obj (.const:.string)
+                  000047c2    00000004     rtc.obj (.const:.string:$P$T0$1)
+                  000047c6    00000002     concole.obj (.const:.string:$P$T0$1)
 
 RTC        0    0000ffd2    00000002     
                   0000ffd2    00000002     rtc.obj (.int41)
@@ -225,7 +232,7 @@ SYSNMI     0    0000fffc    00000002
 .reset     0    0000fffe    00000002     
                   0000fffe    00000002     rts430x_lc_rd_eabi.lib : boot.c.obj (.reset)
 
-.text      0    00010000    0000424a     
+.text      0    00010000    000043b0     
                   00010000    00000466     rts430x_lc_rd_eabi.lib : frcdivd.c.obj (.text:__TI_frcdivd)
                   00010466    0000034e                            : div64u.c.obj (.text:__mspabi_divull)
                   000107b4    000002e0                            : addd.c.obj (.text:__mspabi_addd)
@@ -241,123 +248,128 @@ SYSNMI     0    0000fffc    00000002
                   00011f50    000001e6                            : _printfi.c.obj (.text:ecvt)
                   00012136    000001c8                            : _printfi.c.obj (.text:fcvt)
                   000122fe    000001a2                            : _printfi.c.obj (.text:_pconv_e)
-                  000124a0    00000170                            : _printfi.c.obj (.text:_pconv_a)
-                  00012610    0000015a                            : s_scalbn.c.obj (.text:scalbn)
-                  0001276a    00000148                            : _printfi.c.obj (.text:_pproc_diouxp)
-                  000128b2    00000128                            : _printfi.c.obj (.text:_ltostr)
-                  000129da    00000124     handler.obj (.text:temperatureHandler)
-                  00012afe    000000fc     rts430x_lc_rd_eabi.lib : _printfi.c.obj (.text:_pconv_g)
-                  00012bfa    000000fa                            : _printfi.c.obj (.text:_pproc_fwp)
-                  00012cf4    000000d8                            : cmpd.c.obj (.text:__mspabi_cmpd)
-                  00012dcc    000000c8                            : _printfi.c.obj (.text:_pproc_wstr)
-                  00012e94    000000c0     concole.obj (.text:validateConsoleParameter)
-                  00012f54    000000b2     rts430x_lc_rd_eabi.lib : renormd.c.obj (.text:__TI_renormd)
-                  00013006    000000a6                            : _printfi.c.obj (.text:_pproc_str)
-                  000130ac    000000a6                            : s_frexp.c.obj (.text:frexp)
-                  00013152    0000009e                            : fltlid.c.obj (.text:__mspabi_fltlid)
-                  000131f0    00000090                            : _printfi.c.obj (.text:_ecpy)
-                  00013280    00000090                            : _printfi.c.obj (.text:_mcpy)
-                  00013310    0000008c     rtc.obj (.text:validateStringFormat)
-                  0001339c    00000088     rtc.obj (.text:splitString)
-                  00013424    00000080     rts430x_lc_rd_eabi.lib : ltoa.c.obj (.text:ltoa)
-                  000134a4    00000078                            : _printfi.c.obj (.text:_pconv_f)
-                  0001351c    00000076                            : copy_decompress_lzss.c.obj (.text:decompress:lzss:__TI_decompress_lzss)
-                  00013592    00000074     handler.obj (.text:commandHandler)
-                  00013606    00000072     functions.obj (.text:addLeds)
-                  00013678    00000070     rtc.obj (.text:validateDate)
-                  000136e8    0000006c     handler.obj (.text:ledHandler)
-                  00013754    00000066     rts430x_lc_rd_eabi.lib : fixdli.c.obj (.text:__mspabi_fixdli)
-                  000137ba    00000062                            : atoi.c.obj (.text:atoi)
-                  0001381c    00000062                            : snprintf.c.obj (.text:snprintf)
-                  0001387e    0000005a     main.obj (.text:main)
-                  000138d8    00000058     rts430x_lc_rd_eabi.lib : div32u.asm.obj (.text)
-                  00013930    00000054                            : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit_hold_wdt:__TI_auto_init_nobinit_nopinit_hold_wdt)
-                  00013984    00000054                            : strtok.c.obj (.text:strtok)
-                  000139d8    0000004e                            : _printfi.c.obj (.text:_fcpy)
-                  00013a26    0000004c     handler.obj (.text:rtcHandler)
-                  00013a72    0000004a     concole.obj (.text:splitConsoleString)
-                  00013abc    00000044     rts430x_lc_rd_eabi.lib : sprintf.c.obj (.text:sprintf)
-                  00013b00    00000040                            : div32s.asm.obj (.text)
-                  00013b40    0000003e                            : asr32.asm.obj (.text:l_asr_const)
-                  00013b7e    0000003e                            : lsl32.asm.obj (.text:l_lsl_const)
-                  00013bbc    0000003e                            : lsr32.asm.obj (.text:l_lsr_const)
-                  00013bfa    0000003c     clock.obj (.text:xt2_init)
-                  00013c36    0000003a     rts430x_lc_rd_eabi.lib : lsl64.c.obj (.text:__mspabi_sllll)
-                  00013c70    0000003a                            : lsr64.c.obj (.text:__mspabi_srlll)
-                  00013caa    0000003a     uart.obj (.text:uart_init)
-                  00013ce4    00000038     i2c.obj (.text:i2c_master_send)
-                  00013d1c    00000036     rts430x_lc_rd_eabi.lib : snprintf.c.obj (.text:_outs)
-                  00013d52    00000036                            : strcasecmp.c.obj (.text:strcasecmp)
-                  00013d88    00000036     rtc.obj (.text:validateLeapYear)
-                  00013dbe    00000032     rts430x_lc_rd_eabi.lib : subd.c.obj (.text:__mspabi_subd)
-                  00013df0    00000032     i2c.obj (.text:i2c_master_receive)
-                  00013e22    0000002e     rts430x_lc_rd_eabi.lib : negd.c.obj (.text:__mspabi_negd)
-                  00013e50    0000002e                            : s_copysign.c.obj (.text:copysign)
-                  00013e7e    0000002e     uart.obj (.text:uart_send)
-                  00013eac    0000002c     rts430x_lc_rd_eabi.lib : strcspn.c.obj (.text:strcspn)
-                  00013ed8    0000002a                            : strspn.c.obj (.text:strspn)
-                  00013f02    0000002a     rtc.obj (.text:validateCalender)
-                  00013f2c    0000002a     rtc.obj (.text:validateTime)
-                  00013f56    00000028     rts430x_lc_rd_eabi.lib : fixdi.c.obj (.text:__mspabi_fixdi)
-                  00013f7e    00000026     rtc.obj (.text:changeCalender)
-                  00013fa4    00000026     i2c.obj (.text:i2c_init)
-                  00013fca    00000024     rts430x_lc_rd_eabi.lib : copy_zero_init.c.obj (.text:decompress:ZI:__TI_zero_init_nomemset:__TI_zero_init_nomemset)
-                  00013fee    00000024                            : mult32_f5hw.asm.obj (.text)
-                  00014012    00000020                            : snprintf.c.obj (.text:_outc)
-                  00014032    00000020                            : sprintf.c.obj (.text:_outs)
-                  00014052    0000001e                            : memccpy.c.obj (.text:memccpy)
-                  00014070    0000001e     timer.obj (.text:timer_init)
-                  0001408e    0000001c     rts430x_lc_rd_eabi.lib : strchr.c.obj (.text:strchr)
-                  000140aa    0000001a     functions.obj (.text:LM75_temperature)
-                  000140c4    00000018     rts430x_lc_rd_eabi.lib : mult16_f5hw.asm.obj (.text)
-                  000140dc    00000016                            : memset.c.obj (.text:memset)
-                  000140f2    00000016                            : div16u.asm.obj (.text)
-                  00014108    00000016                            : wcslen.c.obj (.text:wcslen)
-                  0001411e    00000014     functions.obj (.text:GPIO_setPinMode)
-                  00014132    00000014     rts430x_lc_rd_eabi.lib : sprintf.c.obj (.text:_outc)
-                  00014146    00000014                            : memcpy.c.obj (.text:memcpy)
-                  0001415a    00000012     concole.obj (.text:console_debug)
-                  0001416c    00000012     rts430x_lc_rd_eabi.lib : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
-                  0001417e    00000012                            : strcpy.c.obj (.text:strcpy)
-                  00014190    00000012                            : tolower.c.obj (.text:tolower)
-                  000141a2    00000012                            : toupper.c.obj (.text:toupper)
-                  000141b4    00000010                            : asr32.asm.obj (.text:l_asr)
-                  000141c4    00000010                            : lsl32.asm.obj (.text:l_lsl)
-                  000141d4    00000010                            : lsr32.asm.obj (.text:l_lsr)
-                  000141e4    0000000e                            : strlen.c.obj (.text:strlen)
-                  000141f2    0000000c                            : fltid.c.obj (.text:__mspabi_fltid)
-                  000141fe    0000000c     i2c.obj (.text:start_receive_i2c)
-                  0001420a    0000000c     uart.obj (.text:start_transmit)
-                  00014216    0000000a     rts430x_lc_rd_eabi.lib : abs.c.obj (.text:abs)
-                  00014220    00000008     i2c.obj (.text:start_transmit_i2c)
-                  00014228    00000006     rts430x_lc_rd_eabi.lib : exit.c.obj (.text:abort)
-                  0001422e    00000006     uart.obj (.text:start_receive)
-                  00014234    00000006     uart.obj (.text:stop_receive)
-                  0001423a    00000006     uart.obj (.text:stop_transmit)
-                  00014240    00000004     rts430x_lc_rd_eabi.lib : pre_init.c.obj (.text:_system_pre_init)
-                  00014244    00000004     handler.obj (.text:adcHandler)
-                  00014248    00000002     rts430x_lc_rd_eabi.lib : startup.c.obj (.text:_system_post_cinit)
+                  000124a0    0000017a     handler.obj (.text:temperatureHandler)
+                  0001261a    00000170     rts430x_lc_rd_eabi.lib : _printfi.c.obj (.text:_pconv_a)
+                  0001278a    0000015a                            : s_scalbn.c.obj (.text:scalbn)
+                  000128e4    00000148                            : _printfi.c.obj (.text:_pproc_diouxp)
+                  00012a2c    00000128                            : _printfi.c.obj (.text:_ltostr)
+                  00012b54    000000fc                            : _printfi.c.obj (.text:_pconv_g)
+                  00012c50    000000fa                            : _printfi.c.obj (.text:_pproc_fwp)
+                  00012d4a    000000d8                            : cmpd.c.obj (.text:__mspabi_cmpd)
+                  00012e22    000000c8                            : _printfi.c.obj (.text:_pproc_wstr)
+                  00012eea    000000c0     concole.obj (.text:validateConsoleParameter)
+                  00012faa    000000b2     rts430x_lc_rd_eabi.lib : renormd.c.obj (.text:__TI_renormd)
+                  0001305c    000000a6                            : _printfi.c.obj (.text:_pproc_str)
+                  00013102    000000a6                            : s_frexp.c.obj (.text:frexp)
+                  000131a8    0000009e                            : fltlid.c.obj (.text:__mspabi_fltlid)
+                  00013246    00000090                            : _printfi.c.obj (.text:_ecpy)
+                  000132d6    00000090                            : _printfi.c.obj (.text:_mcpy)
+                  00013366    0000008c     rtc.obj (.text:validateStringFormat)
+                  000133f2    00000088     rtc.obj (.text:splitString)
+                  0001347a    00000086     handler.obj (.text:commandHandler)
+                  00013500    00000080     rts430x_lc_rd_eabi.lib : ltoa.c.obj (.text:ltoa)
+                  00013580    00000078                            : _printfi.c.obj (.text:_pconv_f)
+                  000135f8    00000076                            : copy_decompress_lzss.c.obj (.text:decompress:lzss:__TI_decompress_lzss)
+                  0001366e    00000072     functions.obj (.text:addLeds)
+                  000136e0    00000072     main.obj (.text:main)
+                  00013752    00000070     rtc.obj (.text:validateDate)
+                  000137c2    0000006e     concole.obj (.text:splitConsoleString)
+                  00013830    00000066     rts430x_lc_rd_eabi.lib : fixdli.c.obj (.text:__mspabi_fixdli)
+                  00013896    00000062                            : atoi.c.obj (.text:atoi)
+                  000138f8    00000062                            : snprintf.c.obj (.text:snprintf)
+                  0001395a    00000060     handler.obj (.text:ledHandler)
+                  000139ba    00000058     rts430x_lc_rd_eabi.lib : div32u.asm.obj (.text)
+                  00013a12    00000054                            : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit_hold_wdt:__TI_auto_init_nobinit_nopinit_hold_wdt)
+                  00013a66    00000054                            : strtok.c.obj (.text:strtok)
+                  00013aba    0000004e                            : _printfi.c.obj (.text:_fcpy)
+                  00013b08    0000004c     handler.obj (.text:rtcHandler)
+                  00013b54    00000044     rts430x_lc_rd_eabi.lib : sprintf.c.obj (.text:sprintf)
+                  00013b98    00000040     i2c.obj (.text:i2c_master_receive)
+                  00013bd8    00000040     rts430x_lc_rd_eabi.lib : div32s.asm.obj (.text)
+                  00013c18    0000003e                            : asr32.asm.obj (.text:l_asr_const)
+                  00013c56    0000003e                            : lsl32.asm.obj (.text:l_lsl_const)
+                  00013c94    0000003e                            : lsr32.asm.obj (.text:l_lsr_const)
+                  00013cd2    0000003c     functions.obj (.text:temperatureChange)
+                  00013d0e    0000003c     clock.obj (.text:xt2_init)
+                  00013d4a    0000003a     rts430x_lc_rd_eabi.lib : lsl64.c.obj (.text:__mspabi_sllll)
+                  00013d84    0000003a                            : lsr64.c.obj (.text:__mspabi_srlll)
+                  00013dbe    0000003a     uart.obj (.text:uart_init)
+                  00013df8    00000038     i2c.obj (.text:i2c_master_send)
+                  00013e30    00000036     rts430x_lc_rd_eabi.lib : snprintf.c.obj (.text:_outs)
+                  00013e66    00000036                            : strcasecmp.c.obj (.text:strcasecmp)
+                  00013e9c    00000036     rtc.obj (.text:validateLeapYear)
+                  00013ed2    00000032     rts430x_lc_rd_eabi.lib : subd.c.obj (.text:__mspabi_subd)
+                  00013f04    0000002e                            : negd.c.obj (.text:__mspabi_negd)
+                  00013f32    0000002e                            : s_copysign.c.obj (.text:copysign)
+                  00013f60    0000002e     uart.obj (.text:uart_send)
+                  00013f8e    0000002c     rts430x_lc_rd_eabi.lib : strcspn.c.obj (.text:strcspn)
+                  00013fba    0000002a     functions.obj (.text:ledState)
+                  00013fe4    0000002a     rts430x_lc_rd_eabi.lib : strspn.c.obj (.text:strspn)
+                  0001400e    0000002a     rtc.obj (.text:validateCalender)
+                  00014038    0000002a     rtc.obj (.text:validateTime)
+                  00014062    00000028     rts430x_lc_rd_eabi.lib : fixdi.c.obj (.text:__mspabi_fixdi)
+                  0001408a    00000026     rtc.obj (.text:changeCalender)
+                  000140b0    00000026     i2c.obj (.text:i2c_init)
+                  000140d6    00000024     rts430x_lc_rd_eabi.lib : copy_zero_init.c.obj (.text:decompress:ZI:__TI_zero_init_nomemset:__TI_zero_init_nomemset)
+                  000140fa    00000024                            : mult32_f5hw.asm.obj (.text)
+                  0001411e    00000022     functions.obj (.text:GPIO_setPinMode)
+                  00014140    00000020     rts430x_lc_rd_eabi.lib : snprintf.c.obj (.text:_outc)
+                  00014160    00000020                            : sprintf.c.obj (.text:_outs)
+                  00014180    00000020     functions.obj (.text:getTemperature)
+                  000141a0    00000020     functions.obj (.text:temperatureState)
+                  000141c0    0000001e     rts430x_lc_rd_eabi.lib : memccpy.c.obj (.text:memccpy)
+                  000141de    0000001e     timer.obj (.text:timer1_init)
+                  000141fc    0000001c     rts430x_lc_rd_eabi.lib : strchr.c.obj (.text:strchr)
+                  00014218    0000001a     functions.obj (.text:LM75_temperature)
+                  00014232    00000018     rts430x_lc_rd_eabi.lib : mult16_f5hw.asm.obj (.text)
+                  0001424a    00000016                            : memset.c.obj (.text:memset)
+                  00014260    00000016                            : div16u.asm.obj (.text)
+                  00014276    00000016                            : wcslen.c.obj (.text:wcslen)
+                  0001428c    00000014                            : sprintf.c.obj (.text:_outc)
+                  000142a0    00000014                            : memcpy.c.obj (.text:memcpy)
+                  000142b4    00000012     concole.obj (.text:console_debug)
+                  000142c6    00000012     rts430x_lc_rd_eabi.lib : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
+                  000142d8    00000012                            : strcpy.c.obj (.text:strcpy)
+                  000142ea    00000012                            : tolower.c.obj (.text:tolower)
+                  000142fc    00000012                            : toupper.c.obj (.text:toupper)
+                  0001430e    00000010                            : asr32.asm.obj (.text:l_asr)
+                  0001431e    00000010                            : lsl32.asm.obj (.text:l_lsl)
+                  0001432e    00000010                            : lsr32.asm.obj (.text:l_lsr)
+                  0001433e    0000000e                            : strlen.c.obj (.text:strlen)
+                  0001434c    0000000c                            : fltid.c.obj (.text:__mspabi_fltid)
+                  00014358    0000000c     i2c.obj (.text:start_receive_i2c)
+                  00014364    0000000c     timer.obj (.text:start_timer1)
+                  00014370    0000000c     uart.obj (.text:start_transmit)
+                  0001437c    0000000a     rts430x_lc_rd_eabi.lib : abs.c.obj (.text:abs)
+                  00014386    00000008     i2c.obj (.text:start_transmit_i2c)
+                  0001438e    00000006     rts430x_lc_rd_eabi.lib : exit.c.obj (.text:abort)
+                  00014394    00000006     uart.obj (.text:start_receive)
+                  0001439a    00000006     uart.obj (.text:stop_receive)
+                  000143a0    00000006     uart.obj (.text:stop_transmit)
+                  000143a6    00000004     rts430x_lc_rd_eabi.lib : pre_init.c.obj (.text:_system_pre_init)
+                  000143aa    00000004     handler.obj (.text:adcHandler)
+                  000143ae    00000002     rts430x_lc_rd_eabi.lib : startup.c.obj (.text:_system_post_cinit)
 
 MODULE SUMMARY
 
        Module                       code    ro data   rw data
        ------                       ----    -------   -------
     .\
-       main.obj                     90      18        122    
+       main.obj                     114     18        123    
     +--+----------------------------+-------+---------+---------+
-       Total:                       90      18        122    
+       Total:                       114     18        123    
                                                              
     .\sources\
-       concole.obj                  284     2         1001   
-       handler.obj                  596     210       30     
+       concole.obj                  320     2         1081   
+       handler.obj                  688     358       30     
        rtc.obj                      572     6         0      
-       i2c.obj                      260     2         0      
+       functions.obj                340     10        24     
+       i2c.obj                      274     2         0      
        uart.obj                     254     2         4      
-       functions.obj                160     0         0      
+       timer.obj                    62      2         0      
        clock.obj                    60      0         0      
-       timer.obj                    46      2         0      
     +--+----------------------------+-------+---------+---------+
-       Total:                       2232    224       1035   
+       Total:                       2570    382       1139   
                                                              
     C:\ti\ccsv8\tools\compiler\ti-cgt-msp430_18.1.5.LTS\lib\rts430x_lc_rd_eabi.lib
        _printfi.c.obj               6630    38        0      
@@ -440,21 +452,21 @@ MODULE SUMMARY
        Total:                       14924   333       6      
                                                              
        Stack:                       0       0         160    
-       Linker Generated:            0       240       0      
+       Linker Generated:            0       260       0      
     +--+----------------------------+-------+---------+---------+
-       Grand Total:                 17246   815       1323   
+       Grand Total:                 17608   993       1428   
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 00004806 records: 2, size/record: 8, table size: 16
-	.data: load addr=00004726, load size=000000ce bytes, run addr=00002400, run size=00000339 bytes, compression=lzss
-	.bss: load addr=00004800, load size=00000006 bytes, run addr=0000273a, run size=00000152 bytes, compression=zero_init
+__TI_cinit_table @ 000048bc records: 2, size/record: 8, table size: 16
+	.data: load addr=000047c8, load size=000000e2 bytes, run addr=00002400, run size=0000039f bytes, compression=lzss
+	.bss: load addr=000048b6, load size=00000006 bytes, run addr=000027a0, run size=00000155 bytes, compression=zero_init
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 000047f4 records: 3, size/record: 4, table size: 12
+__TI_handler_table @ 000048aa records: 3, size/record: 4, table size: 12
 	index: 0, handler: __TI_zero_init
 	index: 1, handler: __TI_decompress_lzss
 	index: 2, handler: __TI_decompress_none
@@ -546,7 +558,7 @@ address   name
 00000732  ADC12MEM9                              
 00000733  ADC12MEM9_H                            
 00000732  ADC12MEM9_L                            
-00014228  C$$EXIT                                
+0001438e  C$$EXIT                                
 000008c0  CBCTL0                                 
 000008c1  CBCTL0_H                               
 000008c0  CBCTL0_L                               
@@ -633,7 +645,7 @@ address   name
 00000147  FCTL4_H                                
 00000146  FCTL4_L                                
 0001411e  GPIO_setPinMode                        
-000140aa  LM75_temperature                       
+00014218  LM75_temperature                       
 000004c4  MAC                                    
 000004da  MAC32H                                 
 000004db  MAC32H_H                               
@@ -1217,14 +1229,14 @@ address   name
 0000015c  WDTCTL_L                               
 00004400  __STACK_END                            
 000000a0  __STACK_SIZE                           
-00004806  __TI_CINIT_Base                        
-00004816  __TI_CINIT_Limit                       
-000047f4  __TI_Handler_Table_Base                
-00004800  __TI_Handler_Table_Limit               
-00004504  __TI_ISR_TRAP                          
-00013930  __TI_auto_init_nobinit_nopinit_hold_wdt
-0001351c  __TI_decompress_lzss                   
-0001416c  __TI_decompress_none                   
+000048bc  __TI_CINIT_Base                        
+000048cc  __TI_CINIT_Limit                       
+000048aa  __TI_Handler_Table_Base                
+000048b6  __TI_Handler_Table_Limit               
+00004508  __TI_ISR_TRAP                          
+00013a12  __TI_auto_init_nobinit_nopinit_hold_wdt
+000135f8  __TI_decompress_lzss                   
+000142c6  __TI_decompress_none                   
 0001149a  __TI_frcaddd                           
 00010000  __TI_frcdivd                           
 00010d3a  __TI_frcmpyd                           
@@ -1254,166 +1266,179 @@ ffffffff  __TI_pprof_out_hndl
 00010a94  __TI_printfi                           
 ffffffff  __TI_prof_data_size                    
 ffffffff  __TI_prof_data_start                   
-00012f54  __TI_renormd                           
-00013fca  __TI_zero_init_nomemset                
+00012faa  __TI_renormd                           
+000140d6  __TI_zero_init_nomemset                
 ffffffff  __c_args__                             
 000107b4  __mspabi_addd                          
-00012cf4  __mspabi_cmpd                          
+00012d4a  __mspabi_cmpd                          
 00011906  __mspabi_divd                          
-00013b00  __mspabi_divli                         
-000140f2  __mspabi_divu                          
-000138d8  __mspabi_divul                         
+00013bd8  __mspabi_divli                         
+00014260  __mspabi_divu                          
+000139ba  __mspabi_divul                         
 00010466  __mspabi_divull                        
-00013f56  __mspabi_fixdi                         
-00013754  __mspabi_fixdli                        
-000141f2  __mspabi_fltid                         
-00013152  __mspabi_fltlid                        
+00014062  __mspabi_fixdi                         
+00013830  __mspabi_fixdli                        
+0001434c  __mspabi_fltid                         
+000131a8  __mspabi_fltlid                        
 00011234  __mspabi_mpyd                          
-000140c4  __mspabi_mpyi_f5hw                     
-00013fee  __mspabi_mpyl_f5hw                     
-00013e22  __mspabi_negd                          
-00013b00  __mspabi_remli                         
-000140f2  __mspabi_remu                          
-000138d8  __mspabi_remul                         
-000141c4  __mspabi_slll                          
-00013bb6  __mspabi_slll_1                        
-00013b92  __mspabi_slll_10                       
-00013b8e  __mspabi_slll_11                       
-00013b8a  __mspabi_slll_12                       
-00013b86  __mspabi_slll_13                       
-00013b82  __mspabi_slll_14                       
-00013b7e  __mspabi_slll_15                       
-00013bb2  __mspabi_slll_2                        
-00013bae  __mspabi_slll_3                        
-00013baa  __mspabi_slll_4                        
-00013ba6  __mspabi_slll_5                        
-00013ba2  __mspabi_slll_6                        
-00013b9e  __mspabi_slll_7                        
-00013b9a  __mspabi_slll_8                        
-00013b96  __mspabi_slll_9                        
-00013c36  __mspabi_sllll                         
-000141b4  __mspabi_sral                          
-00013b78  __mspabi_sral_1                        
-00013b54  __mspabi_sral_10                       
-00013b50  __mspabi_sral_11                       
-00013b4c  __mspabi_sral_12                       
-00013b48  __mspabi_sral_13                       
-00013b44  __mspabi_sral_14                       
-00013b40  __mspabi_sral_15                       
-00013b74  __mspabi_sral_2                        
-00013b70  __mspabi_sral_3                        
-00013b6c  __mspabi_sral_4                        
-00013b68  __mspabi_sral_5                        
-00013b64  __mspabi_sral_6                        
-00013b60  __mspabi_sral_7                        
-00013b5c  __mspabi_sral_8                        
-00013b58  __mspabi_sral_9                        
-000141d4  __mspabi_srll                          
-00013bf4  __mspabi_srll_1                        
-00013bd0  __mspabi_srll_10                       
-00013bcc  __mspabi_srll_11                       
-00013bc8  __mspabi_srll_12                       
-00013bc4  __mspabi_srll_13                       
-00013bc0  __mspabi_srll_14                       
-00013bbc  __mspabi_srll_15                       
-00013bf0  __mspabi_srll_2                        
-00013bec  __mspabi_srll_3                        
-00013be8  __mspabi_srll_4                        
-00013be4  __mspabi_srll_5                        
-00013be0  __mspabi_srll_6                        
-00013bdc  __mspabi_srll_7                        
-00013bd8  __mspabi_srll_8                        
-00013bd4  __mspabi_srll_9                        
-00013c70  __mspabi_srlll                         
-00013dbe  __mspabi_subd                          
+00014232  __mspabi_mpyi_f5hw                     
+000140fa  __mspabi_mpyl_f5hw                     
+00013f04  __mspabi_negd                          
+00013bd8  __mspabi_remli                         
+00014260  __mspabi_remu                          
+000139ba  __mspabi_remul                         
+0001431e  __mspabi_slll                          
+00013c8e  __mspabi_slll_1                        
+00013c6a  __mspabi_slll_10                       
+00013c66  __mspabi_slll_11                       
+00013c62  __mspabi_slll_12                       
+00013c5e  __mspabi_slll_13                       
+00013c5a  __mspabi_slll_14                       
+00013c56  __mspabi_slll_15                       
+00013c8a  __mspabi_slll_2                        
+00013c86  __mspabi_slll_3                        
+00013c82  __mspabi_slll_4                        
+00013c7e  __mspabi_slll_5                        
+00013c7a  __mspabi_slll_6                        
+00013c76  __mspabi_slll_7                        
+00013c72  __mspabi_slll_8                        
+00013c6e  __mspabi_slll_9                        
+00013d4a  __mspabi_sllll                         
+0001430e  __mspabi_sral                          
+00013c50  __mspabi_sral_1                        
+00013c2c  __mspabi_sral_10                       
+00013c28  __mspabi_sral_11                       
+00013c24  __mspabi_sral_12                       
+00013c20  __mspabi_sral_13                       
+00013c1c  __mspabi_sral_14                       
+00013c18  __mspabi_sral_15                       
+00013c4c  __mspabi_sral_2                        
+00013c48  __mspabi_sral_3                        
+00013c44  __mspabi_sral_4                        
+00013c40  __mspabi_sral_5                        
+00013c3c  __mspabi_sral_6                        
+00013c38  __mspabi_sral_7                        
+00013c34  __mspabi_sral_8                        
+00013c30  __mspabi_sral_9                        
+0001432e  __mspabi_srll                          
+00013ccc  __mspabi_srll_1                        
+00013ca8  __mspabi_srll_10                       
+00013ca4  __mspabi_srll_11                       
+00013ca0  __mspabi_srll_12                       
+00013c9c  __mspabi_srll_13                       
+00013c98  __mspabi_srll_14                       
+00013c94  __mspabi_srll_15                       
+00013cc8  __mspabi_srll_2                        
+00013cc4  __mspabi_srll_3                        
+00013cc0  __mspabi_srll_4                        
+00013cbc  __mspabi_srll_5                        
+00013cb8  __mspabi_srll_6                        
+00013cb4  __mspabi_srll_7                        
+00013cb0  __mspabi_srll_8                        
+00013cac  __mspabi_srll_9                        
+00013d84  __mspabi_srlll                         
+00013ed2  __mspabi_subd                          
 000044d8  _c_int00_noargs                        
-00004514  _ctypes_                               
+0000467e  _ctypes_                               
 0000fffe  _reset_vector                          
 00004360  _stack                                 
-00014248  _system_post_cinit                     
-00014240  _system_pre_init                       
-00014228  abort                                  
-00014216  abs                                    
-00014244  adcHandler                             
-00013606  addLeds                                
-000137ba  atoi                                   
-0000286c  calender                               
-00013f7e  changeCalender                         
-00013592  commandHandler                         
-0000287e  command_checkString                    
-00002880  command_receivedString                 
-00002882  command_slaveAddressSet                
-00002884  command_transmitString                 
-0001415a  console_debug                          
-00013e50  copysign                               
-00013e50  copysignl                              
-00002738  countOfStrings                         
-00002886  countOverflows                         
-0000273a  eingabe                                
-00002736  errno                                  
-000130ac  frexp                                  
-000130ac  frexpl                                 
-00013fa4  i2c_init                               
-00013df0  i2c_master_receive                     
-00013ce4  i2c_master_send                        
-00002732  indexReceiveString                     
-00002888  indexTransmitData                      
-00002734  indexTransmitString                    
+000143ae  _system_post_cinit                     
+000143a6  _system_pre_init                       
+0001438e  abort                                  
+0001437c  abs                                    
+000143aa  adcHandler                             
+0001366e  addLeds                                
+00013896  atoi                                   
+000028d2  calender                               
+00002792  change                                 
+0001408a  changeCalender                         
+0001347a  commandHandler                         
+000028e4  command_checkString                    
+000028f0  command_receivedString                 
+000028e6  command_slaveAddressSet                
+000028f1  command_temperature                    
+000028f2  command_temperatureState               
+000028f3  command_temperatureTrack               
+000028f4  command_transmitString                 
+000142b4  console_debug                          
+00013f32  copysign                               
+00013f32  copysignl                              
+0000279e  countOfStrings                         
+000028e8  countOverflows                         
+000027a0  eingabe                                
+0000279c  errno                                  
+00013102  frexp                                  
+00013102  frexpl                                 
+00014180  getTemperature                         
+000140b0  i2c_init                               
+00013b98  i2c_master_receive                     
+00013df8  i2c_master_send                        
+00002798  indexReceiveString                     
+000028ea  indexTransmitData                      
+0000279a  indexTransmitString                    
 000044f4  isr_delay                              
 00004478  isr_i2c_B1                             
-0000450c  isr_rtc                                
+00004510  isr_rtc                                
 00004400  isr_uartA1                             
-00012610  ldexp                                  
-00012610  ldexpl                                 
-000136e8  ledHandler                             
-00002720  leds                                   
-00013424  ltoa                                   
-0001387e  main                                   
-00014052  memccpy                                
-00014146  memcpy                                 
-000140dc  memset                                 
+00002790  lastTemp                               
+0001278a  ldexp                                  
+0001278a  ldexpl                                 
+0001395a  ledHandler                             
+00013fba  ledState                               
+00013500  ltoa                                   
+000136e0  main                                   
+000141c0  memccpy                                
+000142a0  memcpy                                 
+0001424a  memset                                 
 00002400  parameter                              
-00002722  parameter1                             
-00002726  parameter2                             
-0000272a  parameter3                             
-0000288a  readBytes                              
-0000283a  receivedString                         
-00013a26  rtcHandler                             
-00012610  scalbn                                 
-00012610  scalbnl                                
-0001381c  snprintf                               
-00013a72  splitConsoleString                     
-0001339c  splitString                            
-00013abc  sprintf                                
-0001422e  start_receive                          
-000141fe  start_receive_i2c                      
-0001420a  start_transmit                         
-00014220  start_transmit_i2c                     
-00014234  stop_receive                           
-0001423a  stop_transmit                          
-00013d52  strcasecmp                             
-0001408e  strchr                                 
-0001417e  strcpy                                 
-00013eac  strcspn                                
-000141e4  strlen                                 
-00013ed8  strspn                                 
-00013984  strtok                                 
-000129da  temperatureHandler                     
-00014070  timer_init                             
-00014190  tolower                                
-000141a2  toupper                                
-00002878  transmitData                           
-00002802  transmittedString                      
-00013caa  uart_init                              
-00013e7e  uart_send                              
-00013f02  validateCalender                       
-00012e94  validateConsoleParameter               
-00013678  validateDate                           
-00013d88  validateLeapYear                       
-00013310  validateStringFormat                   
-00013f2c  validateTime                           
-00014108  wcslen                                 
-00013bfa  xt2_init                               
+00002784  parameter1                             
+00002788  parameter2                             
+0000278c  parameter3                             
+00002782  pinState                               
+000028ec  readBytes                              
+000028ee  readTemperature                        
+000028a0  receivedString                         
+00013b08  rtcHandler                             
+0001278a  scalbn                                 
+0001278a  scalbnl                                
+000138f8  snprintf                               
+000137c2  splitConsoleString                     
+000133f2  splitString                            
+00013b54  sprintf                                
+00014394  start_receive                          
+00014358  start_receive_i2c                      
+00014364  start_timer1                           
+00014370  start_transmit                         
+00014386  start_transmit_i2c                     
+0001439a  stop_receive                           
+000143a0  stop_transmit                          
+00013e66  strcasecmp                             
+000141fc  strchr                                 
+000142d8  strcpy                                 
+00013f8e  strcspn                                
+0001433e  strlen                                 
+00013fe4  strspn                                 
+00013a66  strtok                                 
+00002793  temp_pins                              
+00002770  temperature1                           
+00013cd2  temperatureChange                      
+000124a0  temperatureHandler                     
+000141a0  temperatureState                       
+000141de  timer1_init                            
+000142ea  tolower                                
+000142fc  toupper                                
+000028de  transmitData                           
+00002868  transmittedString                      
+00013dbe  uart_init                              
+00013f60  uart_send                              
+0001400e  validateCalender                       
+00012eea  validateConsoleParameter               
+00013752  validateDate                           
+00013e9c  validateLeapYear                       
+00013366  validateStringFormat                   
+00014038  validateTime                           
+00014276  wcslen                                 
+00013d0e  xt2_init                               
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -2170,39 +2195,47 @@ address   name
 000023fe  USBIEPBCTY_7                           
 000023ff  USBIEPSIZXY_7                          
 00002400  parameter                              
-00002720  leds                                   
-00002722  parameter1                             
-00002726  parameter2                             
-0000272a  parameter3                             
-00002732  indexReceiveString                     
-00002734  indexTransmitString                    
-00002736  errno                                  
-00002738  countOfStrings                         
-0000273a  eingabe                                
-00002802  transmittedString                      
-0000283a  receivedString                         
-0000286c  calender                               
-00002878  transmitData                           
-0000287e  command_checkString                    
-00002880  command_receivedString                 
-00002882  command_slaveAddressSet                
-00002884  command_transmitString                 
-00002886  countOverflows                         
-00002888  indexTransmitData                      
-0000288a  readBytes                              
+00002770  temperature1                           
+00002782  pinState                               
+00002784  parameter1                             
+00002788  parameter2                             
+0000278c  parameter3                             
+00002790  lastTemp                               
+00002792  change                                 
+00002793  temp_pins                              
+00002798  indexReceiveString                     
+0000279a  indexTransmitString                    
+0000279c  errno                                  
+0000279e  countOfStrings                         
+000027a0  eingabe                                
+00002868  transmittedString                      
+000028a0  receivedString                         
+000028d2  calender                               
+000028de  transmitData                           
+000028e4  command_checkString                    
+000028e6  command_slaveAddressSet                
+000028e8  countOverflows                         
+000028ea  indexTransmitData                      
+000028ec  readBytes                              
+000028ee  readTemperature                        
+000028f0  command_receivedString                 
+000028f1  command_temperature                    
+000028f2  command_temperatureState               
+000028f3  command_temperatureTrack               
+000028f4  command_transmitString                 
 00004360  _stack                                 
 00004400  __STACK_END                            
 00004400  isr_uartA1                             
 00004478  isr_i2c_B1                             
 000044d8  _c_int00_noargs                        
 000044f4  isr_delay                              
-00004504  __TI_ISR_TRAP                          
-0000450c  isr_rtc                                
-00004514  _ctypes_                               
-000047f4  __TI_Handler_Table_Base                
-00004800  __TI_Handler_Table_Limit               
-00004806  __TI_CINIT_Base                        
-00004816  __TI_CINIT_Limit                       
+00004508  __TI_ISR_TRAP                          
+00004510  isr_rtc                                
+0000467e  _ctypes_                               
+000048aa  __TI_Handler_Table_Base                
+000048b6  __TI_Handler_Table_Limit               
+000048bc  __TI_CINIT_Base                        
+000048cc  __TI_CINIT_Limit                       
 0000ffd2  __TI_int41                             
 0000ffd4  __TI_int42                             
 0000ffd6  __TI_int43                             
@@ -2234,141 +2267,146 @@ address   name
 00011234  __mspabi_mpyd                          
 0001149a  __TI_frcaddd                           
 00011906  __mspabi_divd                          
-00012610  ldexp                                  
-00012610  ldexpl                                 
-00012610  scalbn                                 
-00012610  scalbnl                                
-000129da  temperatureHandler                     
-00012cf4  __mspabi_cmpd                          
-00012e94  validateConsoleParameter               
-00012f54  __TI_renormd                           
-000130ac  frexp                                  
-000130ac  frexpl                                 
-00013152  __mspabi_fltlid                        
-00013310  validateStringFormat                   
-0001339c  splitString                            
-00013424  ltoa                                   
-0001351c  __TI_decompress_lzss                   
-00013592  commandHandler                         
-00013606  addLeds                                
-00013678  validateDate                           
-000136e8  ledHandler                             
-00013754  __mspabi_fixdli                        
-000137ba  atoi                                   
-0001381c  snprintf                               
-0001387e  main                                   
-000138d8  __mspabi_divul                         
-000138d8  __mspabi_remul                         
-00013930  __TI_auto_init_nobinit_nopinit_hold_wdt
-00013984  strtok                                 
-00013a26  rtcHandler                             
-00013a72  splitConsoleString                     
-00013abc  sprintf                                
-00013b00  __mspabi_divli                         
-00013b00  __mspabi_remli                         
-00013b40  __mspabi_sral_15                       
-00013b44  __mspabi_sral_14                       
-00013b48  __mspabi_sral_13                       
-00013b4c  __mspabi_sral_12                       
-00013b50  __mspabi_sral_11                       
-00013b54  __mspabi_sral_10                       
-00013b58  __mspabi_sral_9                        
-00013b5c  __mspabi_sral_8                        
-00013b60  __mspabi_sral_7                        
-00013b64  __mspabi_sral_6                        
-00013b68  __mspabi_sral_5                        
-00013b6c  __mspabi_sral_4                        
-00013b70  __mspabi_sral_3                        
-00013b74  __mspabi_sral_2                        
-00013b78  __mspabi_sral_1                        
-00013b7e  __mspabi_slll_15                       
-00013b82  __mspabi_slll_14                       
-00013b86  __mspabi_slll_13                       
-00013b8a  __mspabi_slll_12                       
-00013b8e  __mspabi_slll_11                       
-00013b92  __mspabi_slll_10                       
-00013b96  __mspabi_slll_9                        
-00013b9a  __mspabi_slll_8                        
-00013b9e  __mspabi_slll_7                        
-00013ba2  __mspabi_slll_6                        
-00013ba6  __mspabi_slll_5                        
-00013baa  __mspabi_slll_4                        
-00013bae  __mspabi_slll_3                        
-00013bb2  __mspabi_slll_2                        
-00013bb6  __mspabi_slll_1                        
-00013bbc  __mspabi_srll_15                       
-00013bc0  __mspabi_srll_14                       
-00013bc4  __mspabi_srll_13                       
-00013bc8  __mspabi_srll_12                       
-00013bcc  __mspabi_srll_11                       
-00013bd0  __mspabi_srll_10                       
-00013bd4  __mspabi_srll_9                        
-00013bd8  __mspabi_srll_8                        
-00013bdc  __mspabi_srll_7                        
-00013be0  __mspabi_srll_6                        
-00013be4  __mspabi_srll_5                        
-00013be8  __mspabi_srll_4                        
-00013bec  __mspabi_srll_3                        
-00013bf0  __mspabi_srll_2                        
-00013bf4  __mspabi_srll_1                        
-00013bfa  xt2_init                               
-00013c36  __mspabi_sllll                         
-00013c70  __mspabi_srlll                         
-00013caa  uart_init                              
-00013ce4  i2c_master_send                        
-00013d52  strcasecmp                             
-00013d88  validateLeapYear                       
-00013dbe  __mspabi_subd                          
-00013df0  i2c_master_receive                     
-00013e22  __mspabi_negd                          
-00013e50  copysign                               
-00013e50  copysignl                              
-00013e7e  uart_send                              
-00013eac  strcspn                                
-00013ed8  strspn                                 
-00013f02  validateCalender                       
-00013f2c  validateTime                           
-00013f56  __mspabi_fixdi                         
-00013f7e  changeCalender                         
-00013fa4  i2c_init                               
-00013fca  __TI_zero_init_nomemset                
-00013fee  __mspabi_mpyl_f5hw                     
-00014052  memccpy                                
-00014070  timer_init                             
-0001408e  strchr                                 
-000140aa  LM75_temperature                       
-000140c4  __mspabi_mpyi_f5hw                     
-000140dc  memset                                 
-000140f2  __mspabi_divu                          
-000140f2  __mspabi_remu                          
-00014108  wcslen                                 
+000124a0  temperatureHandler                     
+0001278a  ldexp                                  
+0001278a  ldexpl                                 
+0001278a  scalbn                                 
+0001278a  scalbnl                                
+00012d4a  __mspabi_cmpd                          
+00012eea  validateConsoleParameter               
+00012faa  __TI_renormd                           
+00013102  frexp                                  
+00013102  frexpl                                 
+000131a8  __mspabi_fltlid                        
+00013366  validateStringFormat                   
+000133f2  splitString                            
+0001347a  commandHandler                         
+00013500  ltoa                                   
+000135f8  __TI_decompress_lzss                   
+0001366e  addLeds                                
+000136e0  main                                   
+00013752  validateDate                           
+000137c2  splitConsoleString                     
+00013830  __mspabi_fixdli                        
+00013896  atoi                                   
+000138f8  snprintf                               
+0001395a  ledHandler                             
+000139ba  __mspabi_divul                         
+000139ba  __mspabi_remul                         
+00013a12  __TI_auto_init_nobinit_nopinit_hold_wdt
+00013a66  strtok                                 
+00013b08  rtcHandler                             
+00013b54  sprintf                                
+00013b98  i2c_master_receive                     
+00013bd8  __mspabi_divli                         
+00013bd8  __mspabi_remli                         
+00013c18  __mspabi_sral_15                       
+00013c1c  __mspabi_sral_14                       
+00013c20  __mspabi_sral_13                       
+00013c24  __mspabi_sral_12                       
+00013c28  __mspabi_sral_11                       
+00013c2c  __mspabi_sral_10                       
+00013c30  __mspabi_sral_9                        
+00013c34  __mspabi_sral_8                        
+00013c38  __mspabi_sral_7                        
+00013c3c  __mspabi_sral_6                        
+00013c40  __mspabi_sral_5                        
+00013c44  __mspabi_sral_4                        
+00013c48  __mspabi_sral_3                        
+00013c4c  __mspabi_sral_2                        
+00013c50  __mspabi_sral_1                        
+00013c56  __mspabi_slll_15                       
+00013c5a  __mspabi_slll_14                       
+00013c5e  __mspabi_slll_13                       
+00013c62  __mspabi_slll_12                       
+00013c66  __mspabi_slll_11                       
+00013c6a  __mspabi_slll_10                       
+00013c6e  __mspabi_slll_9                        
+00013c72  __mspabi_slll_8                        
+00013c76  __mspabi_slll_7                        
+00013c7a  __mspabi_slll_6                        
+00013c7e  __mspabi_slll_5                        
+00013c82  __mspabi_slll_4                        
+00013c86  __mspabi_slll_3                        
+00013c8a  __mspabi_slll_2                        
+00013c8e  __mspabi_slll_1                        
+00013c94  __mspabi_srll_15                       
+00013c98  __mspabi_srll_14                       
+00013c9c  __mspabi_srll_13                       
+00013ca0  __mspabi_srll_12                       
+00013ca4  __mspabi_srll_11                       
+00013ca8  __mspabi_srll_10                       
+00013cac  __mspabi_srll_9                        
+00013cb0  __mspabi_srll_8                        
+00013cb4  __mspabi_srll_7                        
+00013cb8  __mspabi_srll_6                        
+00013cbc  __mspabi_srll_5                        
+00013cc0  __mspabi_srll_4                        
+00013cc4  __mspabi_srll_3                        
+00013cc8  __mspabi_srll_2                        
+00013ccc  __mspabi_srll_1                        
+00013cd2  temperatureChange                      
+00013d0e  xt2_init                               
+00013d4a  __mspabi_sllll                         
+00013d84  __mspabi_srlll                         
+00013dbe  uart_init                              
+00013df8  i2c_master_send                        
+00013e66  strcasecmp                             
+00013e9c  validateLeapYear                       
+00013ed2  __mspabi_subd                          
+00013f04  __mspabi_negd                          
+00013f32  copysign                               
+00013f32  copysignl                              
+00013f60  uart_send                              
+00013f8e  strcspn                                
+00013fba  ledState                               
+00013fe4  strspn                                 
+0001400e  validateCalender                       
+00014038  validateTime                           
+00014062  __mspabi_fixdi                         
+0001408a  changeCalender                         
+000140b0  i2c_init                               
+000140d6  __TI_zero_init_nomemset                
+000140fa  __mspabi_mpyl_f5hw                     
 0001411e  GPIO_setPinMode                        
-00014146  memcpy                                 
-0001415a  console_debug                          
-0001416c  __TI_decompress_none                   
-0001417e  strcpy                                 
-00014190  tolower                                
-000141a2  toupper                                
-000141b4  __mspabi_sral                          
-000141c4  __mspabi_slll                          
-000141d4  __mspabi_srll                          
-000141e4  strlen                                 
-000141f2  __mspabi_fltid                         
-000141fe  start_receive_i2c                      
-0001420a  start_transmit                         
-00014216  abs                                    
-00014220  start_transmit_i2c                     
-00014228  C$$EXIT                                
-00014228  abort                                  
-0001422e  start_receive                          
-00014234  stop_receive                           
-0001423a  stop_transmit                          
-00014240  _system_pre_init                       
-00014244  adcHandler                             
-00014248  _system_post_cinit                     
+00014180  getTemperature                         
+000141a0  temperatureState                       
+000141c0  memccpy                                
+000141de  timer1_init                            
+000141fc  strchr                                 
+00014218  LM75_temperature                       
+00014232  __mspabi_mpyi_f5hw                     
+0001424a  memset                                 
+00014260  __mspabi_divu                          
+00014260  __mspabi_remu                          
+00014276  wcslen                                 
+000142a0  memcpy                                 
+000142b4  console_debug                          
+000142c6  __TI_decompress_none                   
+000142d8  strcpy                                 
+000142ea  tolower                                
+000142fc  toupper                                
+0001430e  __mspabi_sral                          
+0001431e  __mspabi_slll                          
+0001432e  __mspabi_srll                          
+0001433e  strlen                                 
+0001434c  __mspabi_fltid                         
+00014358  start_receive_i2c                      
+00014364  start_timer1                           
+00014370  start_transmit                         
+0001437c  abs                                    
+00014386  start_transmit_i2c                     
+0001438e  C$$EXIT                                
+0001438e  abort                                  
+00014394  start_receive                          
+0001439a  stop_receive                           
+000143a0  stop_transmit                          
+000143a6  _system_pre_init                       
+000143aa  adcHandler                             
+000143ae  _system_post_cinit                     
 ffffffff  __TI_pprof_out_hndl                    
 ffffffff  __TI_prof_data_size                    
 ffffffff  __TI_prof_data_start                   
 ffffffff  __c_args__                             
 
-[950 symbols]
+[963 symbols]

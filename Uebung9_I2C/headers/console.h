@@ -14,8 +14,8 @@
  ********************************************/
 
 #define MAX_COMMANDS        10
-#define MAX_OPTIONS         20
-#define MAX_ARGUMENTS       10
+#define MAX_OPTIONS         22
+#define MAX_ARGUMENTS       12
 #define MAX_PARAMETERS      10
 #define MAX_LENGTH_STRING   20
 

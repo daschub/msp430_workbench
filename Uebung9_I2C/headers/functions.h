@@ -28,6 +28,13 @@
                         a ^= b;         \
                     }
 
+typedef struct
+{
+    uint16_t value;
+    uint8_t unit[15];
+    uint8_t ledState;
+} temperature_t;
+
 
 /***********************************************
  * Prototypes
@@ -38,6 +45,9 @@ uint16_t sizeof_t(uint8_t*);
 uint8_t addLeds(uint8_t*);
 uint8_t GPIO_setPinMode(uint8_t, uint8_t);
 uint16_t LM75_temperature(uint8_t*);
-
+void ledState(void);
+uint8_t temperatureChange(uint16_t);
+uint16_t getTemperature(void);
+void temperatureState(void);
 
 #endif /* FUNCTIONS_FUNCTIONS_H_ */

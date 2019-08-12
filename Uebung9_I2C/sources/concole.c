@@ -32,9 +32,9 @@ typedef struct
 parameter_t parameter =
         {
          commands: {"rtc", "led", "temperature", "adc"},
-         arguments: {"change", "on", "off", "in", "out", "print", "help"},
+         arguments: {"change", "on", "off", "in", "out", "print", "track", "help"},
          options: {"calender", "min", "sec", "hour","1", "2", "3", "4", "5", "6", "7", "8", "9",
-                     "all", "celsius", "fahrenheit", "kelvin", "voltage"}
+                     "all", "celsius", "fahrenheit", "kelvin", "voltage", "on", "off"}
         };
 
 eingabe_t eingabe;
@@ -76,7 +76,8 @@ uint8_t splitConsoleString(uint8_t *splitString)
 {
     uint8_t delimiter[] = " ";
     uint8_t *ptr;
-    uint8_t i = 0;                                                              // laufvariable
+    uint8_t i = 0;                                                               // laufvariablen
+    int8_t j = strlen(splitString);
 
     ptr = strtok(splitString, delimiter);                                       // initialisieren und ersten Abschnitt erstellen
 
@@ -85,6 +86,11 @@ uint8_t splitConsoleString(uint8_t *splitString)
         ptr = strtok(NULL, delimiter);                                          // naechsten Abschnitt erstellen
         i++;
     } // while
+
+    for (;j >= 0; j--){
+        splitString[j] = '\0';
+    }
+
     return i;                                                                   // anzahl an tEILSTRINGS
 } // splitConsoleString
 

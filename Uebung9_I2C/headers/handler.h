@@ -13,6 +13,8 @@
 #define PCF8574T_LENGHT         1
 #define LED_ARRAY              10
 
+uint8_t command_temperatureTrack;
+
 
 /********************************************
  * Prototypes
